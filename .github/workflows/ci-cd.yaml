@@ -21,4 +21,4 @@ jobs:
 
     - name: Deploy Helm Chart
       run: |
-        helm install iptables-viz charts/iptables-viz
+        helm install iptables-viz ./iptables-viz
