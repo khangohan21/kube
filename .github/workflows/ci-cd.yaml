@@ -52,6 +52,7 @@ jobs:
           helm upgrade --install iptables-viz-backend ./iptables-viz \
             --set backend.image.repository=${{ secrets.DOCKERHUB_USERNAME }}/iptables-viz-backend \
             --set backend.image.tag=latest
+            
 
       # Frontend Deployment
       - name: Deploy Frontend using Helm
