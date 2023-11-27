@@ -28,3 +28,10 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/iptables-viz-frontend:latest
+
+ # Frontend Deployment
+      - name: Deploy Frontend using Helm
+        run: |
+          helm upgrade --install iptables-viz-frontend ./iptables-viz \
+            --set frontend.image.repository=${{ secrets.DOCKERHUB_USERNAME }}/iptables-viz-frontend \
+            --set frontend.image.tag=latest
