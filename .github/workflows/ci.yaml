@@ -35,16 +35,15 @@ jobs:
       - name: Copy Helm Charts and Manifests
         run: |
           # Copy your Helm charts and Kubernetes manifests to the EC2 instance
-          cp -r charts /var/kube
-          cp -r manifests /var/kube
+          cp -r iptables-viz ./iptables-viz
 
       - name: Deploy Application with Helm
         run: |
           # Change to the directory containing your Helm charts
-          cd /var/kube
+          cd ./iptables-viz
 
           # Deploy your application using Helm
-          helm install kube ./charts/kube
+          helm install iptables-viz ./iptables-viz
 
       - name: Clean Up
         run: |
