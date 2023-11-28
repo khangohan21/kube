@@ -1,0 +1,52 @@
+name: Deploy to EC2 with Minikube
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Minikube
+        run: |
+          # Install Minikube on your EC2 instance
+          curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+          chmod +x minikube
+          sudo mv minikube /usr/local/bin/
+
+      - name: Start Minikube
+        run: |
+          # Start Minikube with the desired driver
+          minikube start --force --driver=docker
+
+      - name: Set Up Helm
+        run: |
+          # Install Helm on your EC2 instance
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod +x get_helm.sh
+          ./get_helm.sh
+
+      - name: Copy Helm Charts and Manifests
+        run: |
+          # Copy your Helm charts and Kubernetes manifests to the EC2 instance
+          cp -r charts /var/kube
+          cp -r manifests /var/kube
+
+      - name: Deploy Application with Helm
+        run: |
+          # Change to the directory containing your Helm charts
+          cd /var/kube
+
+          # Deploy your application using Helm
+          helm install kube ./charts/kube
+
+      - name: Clean Up
+        run: |
+          # Stop Minikube and perform any necessary cleanup
+          minikube stop
