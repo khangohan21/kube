@@ -67,16 +67,3 @@ jobs:
           chmod +x get_helm.sh
           ./get_helm.sh
 
-      # Backend Deployment
-      - name: Deploy Backend using Helm
-        run: |
-          helm upgrade --install iptables-viz-backend ./iptables-viz \
-            --set backend.image.repository=${{ secrets.DOCKERHUB_USERNAME }}/iptables-viz-backend \
-            --set backend.image.tag=latest
-
-      # Frontend Deployment
-      - name: Deploy Frontend using Helm
-        run: |
-          helm upgrade --install iptables-viz-frontend ./iptables-viz \
-            --set frontend.image.repository=${{ secrets.DOCKERHUB_USERNAME }}/iptables-viz-frontend \
-            --set frontend.image.tag=latest
