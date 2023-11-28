@@ -32,15 +32,10 @@ jobs:
           chmod +x get_helm.sh
           ./get_helm.sh
 
-      - name: Copy Helm Charts and Manifests
-        run: |
-          # Copy your Helm charts and Kubernetes manifests to the EC2 instance
-          cp -r iptables-viz ./iptables-viz
-
       - name: Deploy Application with Helm
         run: |
           # Change to the directory containing your Helm charts
-          cd ./iptables-viz
+          cd /home/ubuntu/kube/
 
           # Deploy your application using Helm
           helm install iptables-viz ./iptables-viz
