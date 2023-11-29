@@ -77,3 +77,14 @@ jobs:
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
           images: |
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+
+      - name: Update Azure CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y azure-cli
+
+      - name: Azure Login
+        run: az login
+
+      - name: Set Azure Cloud
+        run: az cloud set -n azurecloud
